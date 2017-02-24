@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} glances{% endblock %}
+{% block content %}
+<h1>镜像</h1>
+<hr/>
+<a class="btn btn-block" id="createbtn">创建</a>
+<table class="table table-striped">
+    <tr>
+      <th>
+          <label class="checkbox">
+              <input type="checkbox">
+          </label>
+      </th>
+      <th>名称</th>
+      <th>类型</th>
+      <th>状态</th>
+
+      <th>公有</th>
+      <th>受保护的</th>
+      <th>格式</th>
+      <th>项目标识</th>
+      <th>大小</th>
+      <th>Actions</th>
+    </tr>
+    {% for n in list%}
+    <tr>
+        <td>
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>
+        </td>
+        <td>{{n.name}}</td>
+        <td>{{n.description}}</td>
+        <td>{{n.status}}</td>
+        <td>{{n.visibility}}</td>
+        <td>{{n.protected }}</td>
+        <td>{{n.disk_format}}</td>
+        <td class="id">{{n.id}}</td>
+        <td>{{n.size}}</td>
+        <td>{% include "baseSelect.html"%}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% with urlupdate='/glance_update/' urlcreate='/glance_create/' urldelete='/glance_delete/' %}
+{% include "key_base.html"%}
+{% endwith %}
+{% endblock %}

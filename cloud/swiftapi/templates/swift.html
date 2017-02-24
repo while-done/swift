@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/css/amazeui.min.css" rel="stylesheet" media="screen">
+    <script src="/static/js/jq.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/amazeui.min.js"></script>
+      <style>
+          a:hover, a:focus {
+            color: #005580;
+             text-decoration: none;
+        }
+      </style>
+  </head>
+<body>
+<div class="container-fluid">
+    <h1>容器</h1>
+    <hr/>
+  <div class="row-fluid">
+    <div class="span2">
+      <section data-am-widget="accordion" class="am-accordion am-accordion-gapped" data-am-accordion='{  }'>
+          <div type="button" id="createbtn" class="am-btn am-btn-danger am-round">创建容器</div>
+          {% for n in accounts %}
+          <dl class="am-accordion-item am-active">
+            <dt class="am-accordion-title">{{n.name}}</dt>
+            <dd class="am-accordion-bd am-collapse">
+              <div class="am-accordion-content">
+                  <button type="button" class="am-btn cont">删除</button>
+              </div>
+            </dd>
+          </dl>
+          {% endfor %}
+      </section>
+
+    </div>
+    <div class="span10">
+      <table class="am-table am-table-striped am-table-hover am-table-bordered">
+        <thead>
+            <tr>
+                <th colspan="3">网站名称</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th><div class="btn" id="createbtnfoder">创建文件夹</div></th>
+                <th>
+                    <div class="btn" id="upload">上传文件</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for n in container %}
+            <tr>
+                <td>{{n.name}}</td>
+                <td></td>
+                <td>{% include "select.html" %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% include "window.html" %}
+<script>
+$(function () {
+    $("table").on("click", ".download", function () {
+        var id = $(this).parent().parent().parent().find("td:first").html()
+        $.post("/swift/get_object/", {id:id}, function () {
+            $.get("192.168.10.100/home/zzh")
+                location.reload()
+            })
+    })
+})
+</script>
+  </body>
+</html>

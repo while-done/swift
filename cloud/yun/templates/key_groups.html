@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}groups{% endblock %}
+{% block content %}
+<h1>组</h1>
+<hr/>
+<a class="btn btn-block" id="createbtn">创建</a>
+<table class="table table-striped">
+    <tr>
+      <th>
+          <label class="checkbox">
+              <input type="checkbox">
+          </label>
+      </th>
+      <th>名称</th>
+      <th>描述</th>
+      <th>项目标识</th>
+      <th>Actions</th>
+    </tr>
+      {% for n in groups%}
+    <tr>
+      <td>
+          <label class="checkbox">
+              <input type="checkbox">
+          </label>
+      </td>
+      <td>{{n.name}}</td>
+      <td>{{n.description}}</td>
+      <td class="id">{{n.id}}</td>
+      <td>{% include "baseSelect.html"%}</td>
+    </tr>
+      {% endfor %}
+</table>
+{% with urlupdate='/group_update/' urlcreate='/group_create/' urldelete='/group_delete/' %}
+{% include "key_base.html"%}
+{% endwith %}
+
+{% endblock %}

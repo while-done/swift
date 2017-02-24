@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %} roles{% endblock %}
+{% block content %}
+<h1>角色</h1>
+<hr/>
+
+<form class="am-form" method="post" action="/">
+    <table class="table table-striped">
+        <a class="btn btn-block" id="createbtn">创建</a>
+        <tr>
+          <th>
+              <label class="checkbox">
+                  <input type="checkbox">
+              </label>
+          </th>
+          <th>名称</th>
+          <th>描述</th>
+          <th>项目标识</th>
+          <th>Actions</th>
+        </tr>
+          {% for n in roles%}
+        <tr>
+          <td>
+              <label class="checkbox">
+                  <input type="checkbox">
+              </label>
+          </td>
+          <td>{{n.name}}</td>
+          <td>{{n.description}}</td>
+          <td class ="id">{{n.id}}</td>
+          <td>{% include "baseSelect.html"%}</td>
+        </tr>
+          {% endfor %}
+    </table>
+</form>
+
+<script>
+$(function () {
+//    $("table").on("click",".delete",function () {
+//        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+//        $('#role_delete').modal({
+//          relatedTarget: this,
+//          onConfirm: function(e) {
+//              $.post("/role_delete/",{id:id},function () {
+//                location.reload()
+//              })
+//          },
+//          onCancel: function(e) {
+//          }
+//        });
+//    })
+//    $("table").on("click",".update",function () {
+//        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+//        $('#role_update').modal({
+//          relatedTarget: this,
+//          onConfirm: function(e) {
+//              var rname = $('#uname').val()
+//              console.log(rname)
+//              $.post("/role_update/",{id:id,name:rname},function () {
+//                location.reload()
+//              })
+//          },
+//          onCancel: function(e) {
+//          }
+//        });
+//    })
+//    $("body").on("click","#createbtn",function () {
+//        $('#role_create').modal({
+//          relatedTarget: this,
+//          onConfirm: function(e) {
+//              var rname = $('#cname').val()
+//              $.post("/role_create/",{name:rname},function () {
+//                location.reload(true)
+//              })
+//          },
+//          onCancel: function(e) {
+//          }
+//        });
+//    })
+})
+</script>
+<!--创建-->
+<!--<div class="am-modal am-modal-prompt" tabindex="-1" id="role_create">-->
+  <!--<div class="am-modal-dialog">-->
+    <!--<div class="am-modal-hd">创建角色</div>-->
+    <!--<div class="am-modal-bd">-->
+      <!--请输入名称-->
+      <!--<input id="cname" type="text" class="am-modal-prompt-input">-->
+    <!--</div>-->
+    <!--<div class="am-modal-footer">-->
+      <!--<span class="am-modal-btn" data-am-modal-cancel>取消</span>-->
+      <!--<span class="am-modal-btn" data-am-modal-confirm>提交</span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--删除-->
+<!--<div class="am-modal am-modal-prompt" tabindex="-1" id="role_delete">-->
+  <!--<div class="am-modal-dialog">-->
+    <!--<div class="am-modal-bd">-->
+      <!--<h3>确认删除</h3>-->
+    <!--</div>-->
+    <!--<div class="am-modal-footer">-->
+      <!--<span class="am-modal-btn" data-am-modal-cancel>取消</span>-->
+      <!--<span class="am-modal-btn" data-am-modal-confirm>提交</span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--更新-->
+<!--<div class="am-modal am-modal-prompt" tabindex="-1" id="role_update">-->
+  <!--<div class="am-modal-dialog">-->
+    <!--<div class="am-modal-hd">更改角色</div>-->
+    <!--<div class="am-modal-bd">-->
+      <!--请输入名称-->
+      <!--<input id="uname" type="text" class="am-modal-prompt-input">-->
+    <!--</div>-->
+    <!--<div class="am-modal-footer">-->
+      <!--<span class="am-modal-btn" data-am-modal-cancel>取消</span>-->
+      <!--<span class="am-modal-btn" data-am-modal-confirm>提交</span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+
+{% with urlupdate='/role_update/' urlcreate='/role_create/' urldelete='/role_delete/' %}
+{% include "key_base.html"%}
+{% endwith %}
+
+{% endblock %}

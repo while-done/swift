@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %} glances{% endblock %}
+{% block content %}
+<h1>nova</h1>
+<hr/>
+<a class="btn btn-block" id="createbtn">创建</a>
+<table class="table table-striped">
+    <tr>
+      <th>
+          <label class="checkbox">
+              <input type="checkbox">
+          </label>
+      </th>
+      <th>实例名称</th>
+      <th>映像名称</th>
+      <th>IP 地址</th>
+      <th>大小</th>
+      <th>密钥对</th>
+      <th>状态</th>
+      <th>可用域</th>
+      <th>任务</th>
+      <th>电源状态</th>
+      <th>创建以来的时间</th>
+      <th>Actions</th>
+    </tr>
+    {% for n in nova_server%}
+    <tr>
+        <td>
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>
+        </td>
+        <td>{{n.name}}</td>
+        <td></td>
+        <td>{{n.addresses}}</td>
+        <td>{{nova.network.selfservice}}</td>
+        <td></td>
+        <td>{{n.status}}</td>
+        <td>{{n.availability_zone}}</td>
+        <td></td>
+        <td></td>
+        <td>{{n.updated}}</td>
+        <td class="id" style="display: none">{{n.id}}</td>
+        <td>{% include "nova_base.html"%}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% with urlupdate='/nova_update/' urlcreate='/nova_create/' urldelete='/nova_delete/' urlrestart='/nova_restart/' urlstart='/nova_start/' urlstop='/nova_stop/' %}
+{% include "key_base.html"%}
+{% endwith %}
+<h1>nova</h1>
+<hr/>
+<!--<a class="btn btn-block" id="createbtn">创建</a>-->
+<table class="table table-striped">
+    <tr>
+      <th>
+          <label class="checkbox">
+              <input type="checkbox">
+          </label>
+      </th>
+      <th>实例名称</th>
+      <th>VCPU 数量</th>
+      <th>内存</th>
+      <th>根磁盘</th>
+      <th>临时磁盘</th>
+      <th>交换磁盘</th>
+      <th>RX/TX 因子</th>
+      <th>标识</th>
+      <th>公有</th>
+      <th>元数据</th>
+      <th>Actions</th>
+    </tr>
+    {% for n in nova_falvors %}
+    <tr>
+        <td>
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>
+        </td>
+        <td>{{n.name}}</td>
+        <td>{{n.vcpus}}</td>
+        <td>{{n.ram}}</td>
+        <td>{{n.disk}}</td>
+        <td></td>
+        <td>{{n.status}}</td>
+        <td>{{n.rxtx_factor}}</td>
+        <td>{{n.id}}</td>
+        <td>{{n.is_public}}</td>
+        <td>{{n.updated}}</td>
+        <!--<td class="id">{{n.id}}</td>-->
+        <td>{% include "baseSelect.html"%}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!--{% for n in nova_server%}-->
+
+<!--{{n.id}}<br/>-->
+<!--{{n.name}}<br/>-->
+<!--{{n.status}}<br/>-->
+<!--{{n.networks}}<br/>-->
+<!--{{n.image}}<br/>-->
+<!--{{n.flavor}}<br/>-->
+<!--{% endfor %}-->
+<!--<br/><span>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span><br/>-->
+<!--{{nova_falvors}}-->
+<!--{% for n in nova_falvors%}-->
+<!--{{n.id}}<br/>-->
+<!--{{n.name}}<br/>-->
+<!--{% endfor %}-->
+<!--<br/><span>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span><br/>-->
+<!--{{nova_volumes}}<br/>-->
+<!--{% for n in nova_volumes%}-->
+
+<!--{{n.name}}-->
+<!--{{n.id}}-->
+<!--{% endfor %}-->
+<br/><span>---------------------------------------</span><br/>
+<!--{{mn}}-->
+<br/><span>---------------------------------------</span><br/>
+{% for key,value in mn.items %}
+{{key}}:::{{value}}<br/>
+{% endfor %}
+{% endblock %}

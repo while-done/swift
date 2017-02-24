@@ -1,0 +1,146 @@
+  <!--创建容器-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_create">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">创建容器</div>
+    <div class="am-modal-bd">
+      请输入名称
+      <input id="cname" type="text" class="am-modal-prompt-input">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+    </div>
+  </div>
+</div>
+    <!--创建文件夹-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_createfoder">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">创建文件夹</div>
+    <div class="am-modal-bd">
+      请输入名称
+      <input id="fname" type="text" class="am-modal-prompt-input">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+    </div>
+  </div>
+</div>
+<!--删除-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_delete">
+    <div class="am-modal-dialog">
+      <div class="am-modal-bd">
+        <h3>确认删除</h3>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      </div>
+    </div>
+</div>
+    <!--详细信息-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="role_detail">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">Amaze UI</div>
+    <div class="am-modal-bd">
+      Hello world！<br/><br/><br/><br/><br/>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+      <!--文件上传-->
+  <form action="/swift/put_objectfile/" enctype="multipart/form-data" method="POST" id="myForm">
+    <div class="am-modal am-modal-alert" tabindex="-1" id="role_upload">
+        <div class="am-modal-dialog">
+          <div class="am-modal-hd">upload</div>
+          <div class="am-modal-bd">
+            <div class="am-form-group">
+              <label for="doc-ipt-file-1">请选择要上传的文件...</label>
+              <input type="file" id="doc-ipt-file-1" name="img">
+            </div>
+          </div>
+          <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+          </div>
+        </div>
+    </div>
+  </form>
+<script>
+$(function () {
+    $("body").on("click", "#createbtn", function () {
+        $('#role_create').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+                var rname = $('#cname').val()
+                $.post("/swift/put_container/", {name: rname}, function () {
+                    location.reload(true)
+                })
+            },
+            onCancel: function (e) {
+            }
+        });
+    })
+    $("body").on("click", "#createbtnfoder", function () {
+        $('#role_createfoder').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+                var rname = $('#fname').val()
+                $.post("/swift/put_object/", {name: rname}, function () {
+                    location.reload(true)
+                })
+            },
+            onCancel: function (e) {
+            }
+        });
+    })
+    $("table").on("click", ".delete", function () {
+        var id = $(this).parent().parent().parent().parent().parent().parent().children("td:first-child").html()
+        $('#role_delete').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+                $.post("/swift/delete_object/", {id: id}, function () {
+                    location.reload()
+                })
+            },
+            onCancel: function (e) {
+            }
+        });
+    })
+    $("table").on("click", ".detail", function () {
+//        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_detail').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+                $.post("{{urldelete}}", {id: id}, function () {
+                    location.reload()
+                })
+            },
+            onCancel: function (e) {
+            }
+        });
+    })
+    $("section").on("click", ".cont", function () {
+        var id = $(this).parent().parent().parent().children("dt").text()
+        $.post("/swift/delete_container/", {id:id}, function () {
+                location.reload()
+            })
+    })
+    $("table").on("click", "#upload", function () {
+//        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_upload').modal({
+            relatedTarget: this,
+            onConfirm: function (e) {
+              $("#myForm").submit()
+//                $.post("{{urldelete}}", {id: id}, function () {
+//                    location.reload()
+//                })
+            },
+            onCancel: function (e) {
+            }
+        });
+    })
+})
+</script>

@@ -1,0 +1,169 @@
+<!--创建-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_create">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">创建角色</div>
+    <div class="am-modal-bd">
+      请输入名称
+      <input id="cname" type="text" class="am-modal-prompt-input">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+    </div>
+  </div>
+</div>
+          <!--更新-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_update">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">更改角色</div>
+    <div class="am-modal-bd">
+      请输入名称
+      <input id="uname" type="text" class="am-modal-prompt-input">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+    </div>
+  </div>
+</div>
+<!--删除-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_delete">
+    <div class="am-modal-dialog">
+      <div class="am-modal-bd">
+        <h3>确认删除</h3>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      </div>
+    </div>
+</div>
+
+<!--start-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_start">
+    <div class="am-modal-dialog">
+      <div class="am-modal-bd">
+        <h3>启动实例</h3>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      </div>
+    </div>
+</div>
+
+<!--重启-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_restart">
+    <div class="am-modal-dialog">
+      <div class="am-modal-bd">
+        <h3>重启实例</h3>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      </div>
+    </div>
+</div>
+
+<!--暂停-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="role_stop">
+    <div class="am-modal-dialog">
+      <div class="am-modal-bd">
+        <h3>暂停实例</h3>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+  $("table").on("click",".delete",function () {
+        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_delete').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              $.post("{{urldelete}}",{id:id},function () {
+                location.reload()
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+
+  $("body").on("click","#createbtn",function () {
+        $('#role_create').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              var rname = $('#cname').val()
+              $.post("{{urlcreate}}",{name:rname},function () {
+                location.reload(true)
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+
+  $("table").on("click",".update",function () {
+        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_update').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              var rname = $('#uname').val()
+              console.log(id)
+              $.post("{{urlupdate}}",{id:id,name:rname},function () {
+                location.reload()
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+
+  $("table").on("click",".start",function () {
+        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_start').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              $.post("{{urlstart}}",{id:id},function () {
+                location.reload()
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+
+  $("table").on("click",".restart",function () {
+        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_restart').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              $.post("{{urlrestart}}",{id:id},function () {
+                location.reload()
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+
+  $("table").on("click",".stop",function () {
+        var id = $(this).parent().parent().parent().parent().parent().find(".id").text()
+        $('#role_stop').modal({
+          relatedTarget: this,
+          onConfirm: function(e) {
+              $.post("{{urlstop}}",{id:id},function () {
+                location.reload()
+              })
+          },
+          onCancel: function(e) {
+          }
+        });
+    })
+})
+</script>
